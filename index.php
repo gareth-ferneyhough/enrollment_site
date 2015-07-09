@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en"> 
-<head> 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ORCATECH Subject Enrollment</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> 
-</head> 
+<?PHP include("header.html"); ?>
 <body>
   <div class="container" id="top-level-container">
     <div id="header">
@@ -68,6 +58,5 @@
       <button id="view_history_button" class="btn btn-default">View enrollment history</button>
     </div>
   </div>
-</body> 
-<script src="/enrollment.js"></script> 
-</html>
+</body>
+<?PHP include("footer.html"); ?>
