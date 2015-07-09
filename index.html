@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head> 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ORCATECH Subject Enrollment</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> 
+</head> 
+<body>
+  <div class="container">
+    <h3>ORCATECH Subject Enrollment</h3>
+    <hr>
+    <h4>View and edit existing subject</h4>
+    <div>
+      <form id="searchSubjectForm" action="subject_overview.php" method="GET">
+        subject id:
+        <input type="text" name="id" value="enter subject id">
+        <input type="submit" value="Search">
+      </form>
+      <hr> 
+    </div>
+    <div>
+      <table id="subject_table" class="table">
+        <thead>
+          <th>Project</th>
+          <th>Current Status</th>
+          <th>Eligibility</th>
+          <th>Effective Date</th>          
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body> 
+<script src="/enrollment.js"></script> 
+</html>
