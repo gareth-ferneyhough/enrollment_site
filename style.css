@@ -1,8 +1,8 @@
 /*.table {
 	table-layout: fixed;
 }*/
-#top-level-container{
-	max-width: 800px;
+.container{
+	max-width: 850px;
 }
 #header{
 	/*border: 5px solid blue;*/

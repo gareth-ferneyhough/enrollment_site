@@ -12,15 +12,19 @@ function searchErrorFunction(request, status, error) {
 function processOverviewResponse(response) {
   // Clear all existing rows in the result table
   $("#pool_table > tbody > tr").remove();
-  var temp_html = '';
-  $.each(JSON.parse(response), function (i, item) {
-    var dateString = new Date(item.startDate.split(' ')[0]).toDateString();
+  
+  var json = JSON.parse(response)[0];
+  var dateString = new Date(json.startDate.split(' ')[0]).toDateString();
 
-    temp_html += '<tr><td>' + item.status + '</td><td>' + 
-    item.eligibility + ' (' + item.secondary + ')</td><td>' + 
-    dateString + '</td></tr>';
-  });  
-  $('#pool_table > tbody').append(temp_html);
+  var pool_table_html = '<tr><td>' + json.status + '</td><td>' + 
+  json.eligibility + ' (' + json.secondary + ')</td><td>' + 
+  dateString + '</td></tr>';
+
+  $('#subj_id').append(json.subjectId);
+  $('#home_id').append(json.homeId);
+  $('#ra_id').append(json.raId);
+  
+  $('#pool_table > tbody').append(pool_table_html);
   $('#search-results').show();
 }
 

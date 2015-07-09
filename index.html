@@ -25,28 +25,36 @@
       <button type="submit" id="new-subject-button" class="btn btn-default">Add new subject</button>
     </div>
     <div id="search-results">
-      <h4>Subject status:</h4>
-      <br>
+      <h4>Subject information:</h4>
+      <div id="subject-information">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3"><label id="subj_id">Subject id: </label></div>
+            <div class="col-md-3"><label id="home_id">Home id: </label></div>  
+            <div class="col-md-3"><label id="ra_id">RAId id: </label></div>              
+          </div>
+        </div>
+      </div>
       <div>
-        <h4>Pool enrollment:</h4>
+        <h4>Pool:</h4>
         <table id="pool_table" class="table">
           <thead>
             <th>Current Status</th>
             <th>Eligibility</th>
-            <th>Effective Date</th>          
+            <th>As of Date</th>          
           </thead>
           <tbody>
           </tbody>
         </table>
       </div>
       <div>
-        <h4>Project enrollment:</h4>
+        <h4>Projects:</h4>
         <table id="project_table" class="table">
           <thead>
             <th>Project</th>
             <th>Current Status</th>
             <th>Eligibility</th>
-            <th>Effective Date</th>          
+            <th>As of Date</th>          
           </thead>
           <tbody>
           </tbody>

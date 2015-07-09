@@ -51,6 +51,7 @@ function get_overview($mysqli, $subject_id) {
 	$query = $mysqli->query("
 		SELECT e.subjId AS subjectId
 			, e.homeId as homeId
+			, e.RAId as raId
 			, status.Name as status
 			, MAX(e.startDate) as startDate
 			, es.Title AS eligibility
