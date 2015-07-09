@@ -12,7 +12,7 @@
         </div>
         <button type="submit" class="btn btn-default">Search</button>
       </form>      
-      <button id="new-subject-button" class="btn btn-default">Add new subject</button>
+      <a href="add-subject.php" id="new-subject-button" class="btn btn-default">Add new subject</a>
     </div>
     <div id="search-results">
       <h4>Subject information:</h4>
