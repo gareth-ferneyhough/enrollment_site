@@ -5,7 +5,6 @@ $("input[type='text']").on("click", function () {
 $("#search-subject-form").submit(function(e) {
   var formURL = e.currentTarget.action;
   var formMethod = e.currentTarget.method;
-  debugger;
 
   $.ajax({
     type: formMethod,
@@ -14,15 +13,28 @@ $("#search-subject-form").submit(function(e) {
     success: function (response) {
         // Clear all existing rows in the result table
         $("#project_table > tbody > tr").remove();
+        $("#pool_table > tbody > tr").remove();
 
-        var trHTML = '';
-        $.each(JSON.parse(response), function (i, item) {              
-          trHTML += '<tr><td>' + item.projectName + '</td><td>' +
+        var poolHTML = '';
+        var projectHTML = '';
+        $.each(JSON.parse(response), function (i, item) {
+          var dateString = new Date(item.startDate.split(' ')[0]).toDateString();
+
+          var tempHtml = '<tr><td>' + item.projectName + '</td><td>' +
           item.status + '</td><td>' + 
           item.eligibility + ' (' + item.secondary + ')</td><td>' + 
-          item.startDate + '</td></tr>';
+          dateString + '</td></tr>';
+
+          if(item.projectName == "Pool") {
+            poolHTML += tempHtml;
+          } else {
+            projectHTML += tempHtml;
+          } 
+
         });
-        $('#project_table > tbody').append(trHTML);
+        $('#pool_table > tbody').append(poolHTML);
+        $('#project_table > tbody').append(projectHTML);
+        $('#search-results').show();
       },
       error: function(request, status, error)
       {
