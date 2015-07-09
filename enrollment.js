@@ -3,9 +3,25 @@ $("input[type='text']").on("click", function () {
  $(this).select();
 });
 
-// Display any ajax errors in an altert box.
+// Display any ajax errors in an alert box.
 function searchErrorFunction(request, status, error) {
   alert(request.responseText);
+}
+
+// Process the overview for the current subject.
+function processOverviewResponse(response) {
+  // Clear all existing rows in the result table
+  $("#pool_table > tbody > tr").remove();
+  var temp_html = '';
+  $.each(JSON.parse(response), function (i, item) {
+    var dateString = new Date(item.startDate.split(' ')[0]).toDateString();
+
+    temp_html += '<tr><td>' + item.status + '</td><td>' + 
+    item.eligibility + ' (' + item.secondary + ')</td><td>' + 
+    dateString + '</td></tr>';
+  });  
+  $('#pool_table > tbody').append(temp_html);
+  $('#search-results').show();
 }
 
 // Process the list of projects for the current subject.
@@ -15,27 +31,16 @@ function searchErrorFunction(request, status, error) {
 function processProjectListResponse(response) {
   // Clear all existing rows in the result table
   $("#project_table > tbody > tr").remove();
-  $("#pool_table > tbody > tr").remove();
-
-  var poolHTML = '';
-  var projectHTML = '';
+  var temp_html = '';
   $.each(JSON.parse(response), function (i, item) {
     var dateString = new Date(item.startDate.split(' ')[0]).toDateString();
 
-    var tempHtml = '<tr><td>' + item.projectName + '</td><td>' +
+    temp_html += '<tr><td>' + item.projectName + '</td><td>' +
     item.status + '</td><td>' + 
     item.eligibility + ' (' + item.secondary + ')</td><td>' + 
     dateString + '</td></tr>';
-
-    if(item.projectName == "Pool") {
-      poolHTML += tempHtml;
-    } else {
-      projectHTML += tempHtml;
-    } 
-
-  });
-  $('#pool_table > tbody').append(poolHTML);
-  $('#project_table > tbody').append(projectHTML);
+  });  
+  $('#project_table > tbody').append(temp_html);
   $('#search-results').show();
 }
 
@@ -47,9 +52,18 @@ $("#search-subject-form").submit(function(e) {
   $.ajax({
     type: "GET",
     url: "subject_overview.php",
+    data: $("#id-input").serialize() + "&type=overview",
+    success: processOverviewResponse,        
+    error: searchErrorFunction
+    });    
+
+  $.ajax({
+    type: "GET",
+    url: "subject_overview.php",
     data: $("#id-input").serialize() + "&type=projects",
     success: processProjectListResponse,        
     error: searchErrorFunction
     });    
+
     return false; // avoid executing the actual submit of the form.
 });
