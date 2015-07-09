@@ -5,24 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ORCATECH Subject Enrollment</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
   <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
   <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> 
 </head> 
 <body>
-  <div class="container">
-    <h3>ORCATECH Subject Enrollment</h3>
-    <hr>
-    <h4>View and edit existing subject</h4>
-    <div>
-      <form id="searchSubjectForm" action="subject_overview.php" method="GET">
-        subject id:
-        <input type="text" name="id" value="enter subject id">
-        <input type="submit" value="Search">
-      </form>
-      <hr> 
+  <div class="container" id="top-level-container">
+    <div id="header">
+      <h3>ORCATECH Subject Enrollment - Subject View</h3>
     </div>
-    <div>
-      <table id="subject_table" class="table">
+    <div id="search-area">
+      <form class="form-inline" id="search-subject-form" action="subject_overview.php" method="GET">
+        <div class="form-group">
+          <label for="id-input">Subject id:</label>
+          <input type="text" class="form-control" id="id-input" name="id" placeholder="subject id">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+      </form>      
+      <button type="submit" id="new-subject-button" class="btn btn-default">Add new subject</button>
+    </div>
+    <div id="search-results">
+      <table id="pool_table" class="table">
+        <thead>
+          <th>Project</th>
+          <th>Current Status</th>
+          <th>Eligibility</th>
+          <th>Effective Date</th>          
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <table id="project_table" class="table">
         <thead>
           <th>Project</th>
           <th>Current Status</th>
