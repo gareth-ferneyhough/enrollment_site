@@ -8,6 +8,10 @@ function searchErrorFunction(request, status, error) {
   alert(request.responseText);
 }
 
+function getUpdateButtonHtml() {
+  return "<button id=\"edit_subject_button\" class=\"btn btn-default\">Update</button>";
+}
+
 // Process the overview for the current subject.
 function processOverviewResponse(response) {
   // Clear all existing rows in the result table
@@ -18,7 +22,8 @@ function processOverviewResponse(response) {
 
   var pool_table_html = '<tr><td>' + json.status + '</td><td>' + 
   json.eligibility + ' (' + json.secondary + ')</td><td>' + 
-  dateString + '</td></tr>';
+  dateString + '</td><td>' +
+  getUpdateButtonHtml() + '</td></tr>';
 
   $('#subj_id').append(json.subjectId);
   $('#home_id').append(json.homeId);
@@ -42,7 +47,8 @@ function processProjectListResponse(response) {
     temp_html += '<tr><td>' + item.projectName + '</td><td>' +
     item.status + '</td><td>' + 
     item.eligibility + ' (' + item.secondary + ')</td><td>' + 
-    dateString + '</td></tr>';
+    dateString + '</td><td>' +
+    getUpdateButtonHtml() + '</td></tr>';
   });  
   $('#project_table > tbody').append(temp_html);
   $('#search-results').show();
