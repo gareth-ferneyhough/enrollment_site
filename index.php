@@ -12,17 +12,16 @@
         </div>
         <button type="submit" class="btn btn-default">Search</button>
       </form>      
-      <a href="add-subject.php" id="new-subject-button" class="btn btn-default">Add new subject</a>
+      <button id="new-subject-button" class="btn btn-default">Add new subject</button>
     </div>
-    <div id="search-results">
+    <div id="search-results-area">
       <h4>Subject information:</h4>
       <div id="subject-information">
         <div class="container">
           <div class="row">
-            <div class="col-md-3"><label id="subj_id">Subject id: </label></div>
-            <div class="col-md-3"><label id="home_id">Home id: </label></div>  
-            <div class="col-md-3"><label id="ra_id">RAId id: </label></div>  
-            <div class="col-md-3"><button id="edit_subject_button" class="btn btn-default">Update subject information</button></div>            
+            <div class="col-md-2"><label>Subject id: </label><label id="subj_id"></label></div>
+            <div class="col-md-2"><label>Home id: </label><label id="home_id"></label></div>  
+            <div class="col-md-2"><button id="edit_subject_button" class="btn btn-default">Update subject information</button></div>            
           </div>
         </div>
       </div>
@@ -57,6 +56,29 @@
       <button id="new_project_button" class="btn btn-default">Enroll in new project</button>
       <button id="view_history_button" class="btn btn-default">View enrollment history</button>
     </div>
+    <div id="add-new-subject-area">
+      <h4>Enter new subject information:</h4>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="input-subject-id" class="col-sm-2 control-label">Subject id</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="input-subject-id" placeholder="Subject id">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="input-home-id" class="col-sm-2 control-label">Home id</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="input-home-id" placeholder="Home id">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Enroll</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   </div>
 </body>
 <?PHP include("footer.html"); ?>

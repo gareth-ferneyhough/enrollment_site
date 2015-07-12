@@ -25,12 +25,12 @@ function processOverviewResponse(response) {
   dateString + '</td><td>' +
   getUpdateButtonHtml() + '</td></tr>';
 
-  $('#subj_id').append(json.subjectId);
-  $('#home_id').append(json.homeId);
-  $('#ra_id').append(json.raId);
+  $('#subj_id').html(json.subjectId);
+  $('#home_id').html(json.homeId);
   
   $('#pool_table > tbody').append(pool_table_html);
-  $('#search-results').show();
+  $('#search-results-area').show();
+  $('#add-new-subject-area').hide();
 }
 
 // Process the list of projects for the current subject.
@@ -51,7 +51,8 @@ function processProjectListResponse(response) {
     getUpdateButtonHtml() + '</td></tr>';
   });  
   $('#project_table > tbody').append(temp_html);
-  $('#search-results').show();
+  $('#search-results-area').show();
+  $('#add-new-subject-area').hide();
 }
 
 $("#search-subject-form").submit(function(e) {
@@ -76,4 +77,9 @@ $("#search-subject-form").submit(function(e) {
     });    
 
     return false; // avoid executing the actual submit of the form.
+});
+
+$("#new-subject-button").click(function() {
+  $('#search-results-area').hide();
+  $('#add-new-subject-area').show();
 });

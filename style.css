@@ -21,6 +21,12 @@
 #new-subject-button{
 	float: right;
 }
-#search-results{
+#search-results-area{
 	display: none;
+}
+#add-new-subject-area{
+	display: none;
+}
+#add-new-subject-area input{
+	max-width: 200px;
 }
