@@ -144,14 +144,22 @@ function processGetEnrollmentStatesResponse(response) {
   // Populate enrollment state dropdown
   var temp_html = '';
   $.each(JSON.parse(json.data.enrollment_states), function (i, item) {
-    temp_html += '<option value=' + item.stateId + '>' + item.Name + '</option>';
+    temp_html += '<option value=' + item.stateId;
+    if(enrollment_state == item.stateId) { // mark as selected if need be
+      temp_html += ' selected';
+    }
+    temp_html += '>' + item.Name + '</option>';
   });  
   $('#update-area > #enrollment-states').append(temp_html);
 
   // Populate eligibility state dropdown
   temp_html = '';
   $.each(JSON.parse(json.data.eligibility_states), function (i, item) {
-    temp_html += '<option value=' + item.StateId + '>' + item.Title + '</option>';
+    temp_html += '<option value=' + item.StateId;
+    if(eligibility_state == item.StateId) { // mark as selected if need be
+      temp_html += ' selected';
+    }
+    temp_html += '>' + item.Title + '</option>';
   });  
   $('#update-area > #eligibility-states').append(temp_html);
 

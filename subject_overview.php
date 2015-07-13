@@ -61,7 +61,7 @@ function get_overview($mysqli, $subject_id) {
 			, e.homeId as homeId
 			, e.RAId as raId
 			, status.Name as status
-			, MAX(e.startDate) as startDate
+			, e.startDate as startDate
 			, es.Title AS eligibility
 			, ess.Title AS secondary
 		FROM enrollment e 
@@ -74,7 +74,8 @@ function get_overview($mysqli, $subject_id) {
 				AND e.secondary = ess.SubStateId
 		WHERE projId = 0
 			AND subjId = " . $subject_id . "
-		ORDER BY startDate DESC;");
+		ORDER BY startDate DESC
+		LIMIT 1;");
 	$rows = array();
 	while($r = mysqli_fetch_assoc($query)) {
 	    $rows[] = $r;
