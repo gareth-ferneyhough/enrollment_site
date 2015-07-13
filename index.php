@@ -79,6 +79,10 @@
       </form>
       <h4 id="server-response"></h4>
     </div>
+    <div id="update-area">
+      <h4>Update pool enrollment status</h4>
+      
+    </div>
   </div>
   </div>
 </body>

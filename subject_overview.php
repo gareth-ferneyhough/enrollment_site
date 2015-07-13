@@ -21,6 +21,7 @@ switch($_GET["type"]) {
 function get_projects($mysqli, $subject_id) {
 	$query = $mysqli->query("
 		SELECT e.subjId AS subjectId
+			, e.projId AS projectId
 			, pl.name AS projectName
 			, status.Name as status
 			, MAX(e.startDate) as startDate
@@ -51,6 +52,7 @@ function get_projects($mysqli, $subject_id) {
 function get_overview($mysqli, $subject_id) {
 	$query = $mysqli->query("
 		SELECT e.subjId AS subjectId
+			, e.projId AS projectId
 			, e.homeId as homeId
 			, e.RAId as raId
 			, status.Name as status

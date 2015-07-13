@@ -1,15 +1,31 @@
+// Global state object.
+var state = {subjectId: -1, currentProjectToUpdate: -1};
+
 // Select the text of an input field when we click on it.
 $("input[type='text']").on("click", function () {
  $(this).select();
 });
+
+function registerUpdateButtonClick() {
+  $(".btn-update-project").on("click", function() {
+    state.currentProjectToUpdate = this.attributes["data-proj-id"].value;
+    $.ajax({
+    type: "GET",
+    url: "get_enrollment_states.php",
+    success: processGetEnrollmentStatesResponse,        
+    error: searchErrorFunction
+    });   
+  });
+}
 
 // Display any ajax errors in an alert box.
 function searchErrorFunction(request, status, error) {
   alert(request.responseText);
 }
 
-function getUpdateButtonHtml() {
-  return "<button id=\"edit_subject_button\" class=\"btn btn-warning\">Update</button>";
+function getUpdateButtonHtml(projectId) {
+  return "<button id=\"update-project-button\" class=\"btn btn-warning btn-update-project\" data-proj-id=\"" + 
+    projectId + "\">Update</button>";
 }
 
 // Process the overview for the current subject.
@@ -23,14 +39,17 @@ function processOverviewResponse(response) {
   var pool_table_html = '<tr><td>' + json.status + '</td><td>' + 
   json.eligibility + ' (' + json.secondary + ')</td><td>' + 
   dateString + '</td><td>' +
-  getUpdateButtonHtml() + '</td></tr>';
+  getUpdateButtonHtml(json.projectId) + '</td></tr>';
 
   $('#subj_id').html(json.subjectId);
   $('#home_id').html(json.homeId);
-  
+
   $('#pool_table > tbody').append(pool_table_html);
   $('#search-results-area').show();
   $('#add-new-subject-area').hide();
+
+  registerUpdateButtonClick();
+  state.subjectId = json.subjectId;
 }
 
 // Process the list of projects for the current subject.
@@ -48,11 +67,13 @@ function processProjectListResponse(response) {
     item.status + '</td><td>' + 
     item.eligibility + ' (' + item.secondary + ')</td><td>' + 
     dateString + '</td><td>' +
-    getUpdateButtonHtml() + '</td></tr>';
+    getUpdateButtonHtml(item.projectId) + '</td></tr>';
   });  
   $('#project_table > tbody').append(temp_html);
   $('#search-results-area').show();
   $('#add-new-subject-area').hide();
+
+  registerUpdateButtonClick();
 }
 
 function processAddSubjectResponse(response) {  
@@ -68,6 +89,11 @@ function processAddSubjectResponse(response) {
     responseArea.removeClass();
     responseArea.addClass("text-warning");
   }  
+}
+
+function processGetEnrollmentStatesResponse(response) {
+  alert(state.currentProjectToUpdate);
+  //alert(response);
 }
 
 $("#search-subject-form").submit(function(e) {

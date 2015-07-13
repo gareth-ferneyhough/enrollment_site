@@ -30,3 +30,6 @@
 #add-new-subject-area input{
 	max-width: 200px;
 }
+#update-area{
+	display: none;
+}
