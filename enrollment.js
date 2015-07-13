@@ -89,7 +89,11 @@ function processProjectListResponse(response) {
   $("#project_table > tbody > tr").remove();
   var temp_html = '';
   $.each(JSON.parse(response), function (i, item) {
-    var dateString = new Date(item.startDate.split(' ')[0]).toDateString();
+    var myDate = new Date(item.startDate.split(' ')[0]);
+    // // Super-hack to prevent Date from applying a timezone offset
+    // myDate.setHours(myDate.getHours() - 
+    //   myDate.getTimezoneOffset() / 60);
+    var dateString = myDate.toDateString();    
 
     temp_html += '<tr><td>' + item.projectName + '</td><td>' +
     item.status + '</td><td>' + 
