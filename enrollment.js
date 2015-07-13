@@ -1,5 +1,5 @@
 // Global state object.
-var state = {subjectId: -1, currentProjectToUpdate: -1};
+var state = {subjectId: -1, currentProjectIdToUpdate: -1};
 
 // Select the text of an input field when we click on it.
 $("input[type='text']").on("click", function () {
@@ -8,7 +8,7 @@ $("input[type='text']").on("click", function () {
 
 function registerUpdateButtonClick() {
   $(".btn-update-project").on("click", function() {
-    state.currentProjectToUpdate = this.attributes["data-proj-id"].value;
+    state.currentProjectIdToUpdate = this.attributes["data-proj-id"].value;
     $.ajax({
     type: "GET",
     url: "get_enrollment_states.php",
@@ -16,6 +16,27 @@ function registerUpdateButtonClick() {
     error: searchErrorFunction
     });   
   });
+}
+
+function setAppDisplayState(state) {
+  switch(state) {
+    case 'searchResults':
+      $('#search-results-area').show();
+      $('#add-new-subject-area').hide();
+      $('#update-area').hide();
+    break;
+
+    case 'addNewSubject':
+      $('#search-results-area').hide();
+      $('#add-new-subject-area').show();
+      $('#update-area').hide();
+
+    case 'updateProject':
+      $('#search-results-area').hide();
+      $('#add-new-subject-area').hide();
+      $('#update-area').show();
+    break;
+  }
 }
 
 // Display any ajax errors in an alert box.
@@ -45,11 +66,10 @@ function processOverviewResponse(response) {
   $('#home_id').html(json.homeId);
 
   $('#pool_table > tbody').append(pool_table_html);
-  $('#search-results-area').show();
-  $('#add-new-subject-area').hide();
 
   registerUpdateButtonClick();
   state.subjectId = json.subjectId;
+  setAppDisplayState("searchResults");
 }
 
 // Process the list of projects for the current subject.
@@ -70,10 +90,9 @@ function processProjectListResponse(response) {
     getUpdateButtonHtml(item.projectId) + '</td></tr>';
   });  
   $('#project_table > tbody').append(temp_html);
-  $('#search-results-area').show();
-  $('#add-new-subject-area').hide();
 
   registerUpdateButtonClick();
+  setAppDisplayState("searchResults");
 }
 
 function processAddSubjectResponse(response) {  
@@ -92,8 +111,17 @@ function processAddSubjectResponse(response) {
 }
 
 function processGetEnrollmentStatesResponse(response) {
-  alert(state.currentProjectToUpdate);
   //alert(response);
+
+  // Clear all existing dropdowns
+  $("#update-area > select > option").remove();
+  var temp_html = '';
+  $.each(JSON.parse(response), function (i, item) {
+    temp_html += '<option value=' + item.stateId + '>' + item.Name + '</option>'
+  });  
+  $('#update-area > select').append(temp_html);
+
+  setAppDisplayState('updateProject');
 }
 
 $("#search-subject-form").submit(function(e) {
@@ -133,6 +161,5 @@ $("#add-new-subject-form").submit(function(e) {
 });
 
 $("#new-subject-button").click(function() {
-  $('#search-results-area').hide();
-  $('#add-new-subject-area').show();
+  setAppDisplayState("addNewSubject")
 });

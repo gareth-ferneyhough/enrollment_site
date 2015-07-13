@@ -80,8 +80,12 @@
       <h4 id="server-response"></h4>
     </div>
     <div id="update-area">
-      <h4>Update pool enrollment status</h4>
-      
+      <h4>Update project enrollment status and click submit when finished.</h4>
+      <div><label>Subject id: </label><label id="subj_id"></div>
+      <div><label>Project name: </label><label id="project_name"></div>
+      <label>Enrollment state:</label>
+      <select class="form-control" name="enrollment-state">
+      </select>
     </div>
   </div>
   </div>

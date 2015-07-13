@@ -11,7 +11,8 @@ if($mysqli->connect_errno > 0){
 }
 
 $query = $mysqli->query("
-    SELECT stateId, Name FROM enrollment_states;");
+    SELECT stateId, Name FROM enrollment_states
+    WHERE Display != 0;");
 $rows = array();
 while($r = mysqli_fetch_assoc($query)) {
     $rows[] = $r;
