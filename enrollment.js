@@ -55,6 +55,10 @@ function processProjectListResponse(response) {
   $('#add-new-subject-area').hide();
 }
 
+function processAddSubjectResponse(response) {
+  $('#add-new-subject-area > #server-response').html(response);
+}
+
 $("#search-subject-form").submit(function(e) {
   // Make two ajax calls: one to retrieve the subject 
   // overview (homeId, pool enrollment, etc), and one
@@ -73,6 +77,18 @@ $("#search-subject-form").submit(function(e) {
     url: "subject_overview.php",
     data: $("#id-input").serialize() + "&type=projects",
     success: processProjectListResponse,        
+    error: searchErrorFunction
+    });    
+
+    return false; // avoid executing the actual submit of the form.
+});
+
+$("#add-new-subject-form").submit(function(e) { 
+  $.ajax({
+    type: "GET",
+    url: "add_subject.php",
+    data: $("#add-new-subject-form").serialize(),
+    success: processAddSubjectResponse,        
     error: searchErrorFunction
     });    
 
