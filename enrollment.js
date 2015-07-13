@@ -1,5 +1,5 @@
 // Global state object.
-var state = {subjectId: -1, currentProjectId: -1, projectIdMap: {}};
+var state = {subjectId: -1, currentProjectId: -1, projectIdMap: {}, eligibilityStatesMap: {}};
 
 // Select the text of an input field when we click on it.
 $("input[type='text']").on("click", function () {
@@ -133,9 +133,23 @@ function processGetEnrollmentStatesResponse(response) {
   // Clear all existing dropdowns
   $("#update-area > select > option").remove();
 
+  var json = JSON.parse(response);
+  // Create eligibility sub state map.
+  // This is inefficient, but we need to update the sub state
+  // options every time the eligibility state options change.
+  // Let's create a map of eligibility states which map to 
+  // their corresponding sub state ids and names, then populate the 
+  // sub state options in the handler for the eligibility state changed event. 
+  $.each(JSON.parse(json.data.eligibility_sub_states), function (i, item) {
+    if(typeof(state.eligibilityStatesMap[item.StateId]) == 'undefined'){
+      state.eligibilityStatesMap[item.StateId] = [];
+    }
+    state.eligibilityStatesMap[item.StateId].push(
+      {'id': item.SubStateId, 'title': item.Title});
+  });
+
   // Parse the current states from the response, so we can ensure
   // that they are currently selected in the dropdown.
-  var json = JSON.parse(response);
   var current_states = JSON.parse(json.data.current_states)[0];
   var enrollment_state = current_states.enrollment_state;
   var eligibility_state = current_states.eligibility_state;

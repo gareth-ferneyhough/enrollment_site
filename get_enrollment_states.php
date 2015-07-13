@@ -64,11 +64,26 @@ while($r = mysqli_fetch_assoc($query)) {
 
 $eligibility_states = json_encode($rows);
 
+// Finally, get the list of available eligibility sub states.
+$query = $mysqli->query("
+    SELECT StateId, SubStateId, Title FROM eligibility_sub_states;");
+if(!$query){
+    print create_response_string('error', 'Database error occured', NULL);
+    die();
+}
+$rows = array();
+while($r = mysqli_fetch_assoc($query)) {
+    $rows[] = $r;
+}
+
+$eligibility_sub_states = json_encode($rows);
+
 // Create our response string.
 $response = create_response_string('success', NULL, 
     array('current_states' => $current_states,
         'enrollment_states' => $enrollment_states, 
-        'eligibility_states' => $eligibility_states));
+        'eligibility_states' => $eligibility_states,
+        'eligibility_sub_states' => $eligibility_sub_states));
 
 print $response;
 ?>
