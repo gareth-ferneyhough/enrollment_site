@@ -2,7 +2,7 @@
 <body>
   <div class="container" id="top-level-container">
     <div id="header">
-      <h3>ORCATECH Subject Enrollment - Subject View</h3>
+      <h3><a href="/">ORCATECH Subject Enrollment - Home</a></h3>
     </div>
     <div id="search-area">
       <form class="form-inline" id="search-subject-form">

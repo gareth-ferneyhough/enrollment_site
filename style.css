@@ -19,7 +19,7 @@
 	float: left;
 }
 #new-subject-button{
-	float: right;
+	margin-left: 7px;
 }
 #search-results-area{
 	display: none;
