@@ -90,6 +90,9 @@
       <label>Eligibility state:</label>
       <select class="form-control" id="eligibility-states" name="eligibility-states">
       </select>
+        <label>Eligibility sub state:</label>
+      <select class="form-control" id="eligibility-sub-states" name="eligibility-sub-states">
+      </select>
     </div>
   </div>
   </div>

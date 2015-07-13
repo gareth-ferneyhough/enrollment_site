@@ -6,6 +6,22 @@ $("input[type='text']").on("click", function () {
  $(this).select();
 });
 
+function populateEligibilitySubStatesDropdown(enrollment_state_index, current_enrollment_sub_state) {
+  // Empty and repopulate the eligibility sub state drop down.
+  // This is called every time the user changed the option of the eligibility state.
+  // Yes, this is inefficient. 
+  var temp_html = '';
+  $.each(state.eligibilityStatesMap[enrollment_state_index], function (i, item) {
+    temp_html += '<option value=' + item.id;
+    if(current_enrollment_sub_state == item.id) { // mark as selected if need be
+      temp_html += ' selected';
+    }
+    temp_html += '>' + item.title + '</option>';
+  }); 
+  $('#update-area > #eligibility-sub-states').empty();
+  $('#update-area > #eligibility-sub-states').append(temp_html);
+}
+
 function registerUpdateButtonClick() {
   $(".btn-update-project").on("click", function() {
     // Save the state so we know what project the user selected
@@ -172,6 +188,7 @@ function processGetEnrollmentStatesResponse(response) {
     temp_html += '<option value=' + item.StateId;
     if(eligibility_state == item.StateId) { // mark as selected if need be
       temp_html += ' selected';
+      populateEligibilitySubStatesDropdown(item.StateId, eligibility_sub_state);
     }
     temp_html += '>' + item.Title + '</option>';
   });  
@@ -218,4 +235,10 @@ $("#add-new-subject-form").submit(function(e) {
 
 $("#new-subject-button").click(function() {
   setAppDisplayState("addNewSubject")
+});
+
+$('#update-area > #eligibility-states').change(function() {
+  $("#update-area > #eligibility-states option:selected").each(function() {
+      populateEligibilitySubStatesDropdown($(this).val(), null);
+  });
 });
