@@ -62,13 +62,13 @@
         <div class="form-group">
           <label for="input-subject-id" class="col-sm-2 control-label">Subject id</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="input-subject-id" name="input-subject-id" placeholder="Subject id">
+            <input type="text" class="form-control" id="input-subject-id" name="subjectId" placeholder="Subject id">
           </div>
         </div>
         <div class="form-group">
           <label for="input-home-id" class="col-sm-2 control-label">Home id</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="input-home-id" name="input-home-id" placeholder="Home id">
+            <input type="text" class="form-control" id="input-home-id" name="homeId" placeholder="Home id">
           </div>
         </div>
         <div class="form-group">
