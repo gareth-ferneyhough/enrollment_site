@@ -10,9 +10,9 @@
           <label for="id-input">Subject id:</label>
           <input type="text" class="form-control" id="id-input" name="id" placeholder="subject id">
         </div>
-        <button type="submit" class="btn btn-default">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
       </form>      
-      <button id="new-subject-button" class="btn btn-default">Add new subject</button>
+      <button id="new-subject-button" class="btn btn-primary">Add new subject</button>
     </div>
     <div id="search-results-area">
       <h4>Subject information:</h4>
@@ -21,7 +21,7 @@
           <div class="row">
             <div class="col-md-2"><label>Subject id: </label><label id="subj_id"></label></div>
             <div class="col-md-2"><label>Home id: </label><label id="home_id"></label></div>  
-            <div class="col-md-2"><button id="edit_subject_button" class="btn btn-default">Update subject information</button></div>            
+            <div class="col-md-2"><button id="edit_subject_button" class="btn btn-warning">Update subject information</button></div>            
           </div>
         </div>
       </div>
@@ -53,8 +53,8 @@
         </table>
       </div>
       <br>
-      <button id="new_project_button" class="btn btn-default">Enroll in new project</button>
-      <button id="view_history_button" class="btn btn-default">View enrollment history</button>
+      <button id="new_project_button" class="btn btn-primary">Enroll in new project</button>
+      <button id="view_history_button" class="btn btn-info">View enrollment history</button>
     </div>
     <div id="add-new-subject-area">
       <h4>Enter new subject information:</h4>

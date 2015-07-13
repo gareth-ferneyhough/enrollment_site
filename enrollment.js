@@ -9,7 +9,7 @@ function searchErrorFunction(request, status, error) {
 }
 
 function getUpdateButtonHtml() {
-  return "<button id=\"edit_subject_button\" class=\"btn btn-default\">Update</button>";
+  return "<button id=\"edit_subject_button\" class=\"btn btn-warning\">Update</button>";
 }
 
 // Process the overview for the current subject.
@@ -55,8 +55,19 @@ function processProjectListResponse(response) {
   $('#add-new-subject-area').hide();
 }
 
-function processAddSubjectResponse(response) {
-  $('#add-new-subject-area > #server-response').html(response);
+function processAddSubjectResponse(response) {  
+  var json = JSON.parse(response);
+  var responseArea = $("#add-new-subject-area > #server-response");
+  if(json.status == 'success') {
+    responseArea.html("Subject enrolled successfully.");
+    responseArea.removeClass();
+    responseArea.addClass("text-success");
+  }
+  else{
+    responseArea.html("Error enrolling subject: " + json.message);
+    responseArea.removeClass();
+    responseArea.addClass("text-warning");
+  }  
 }
 
 $("#search-subject-form").submit(function(e) {
