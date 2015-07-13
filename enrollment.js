@@ -246,7 +246,7 @@ $("#search-subject-form").submit(function(e) {
 
 $("#add-new-subject-form").submit(function(e) { 
   $.ajax({
-    type: "GET",
+    type: "POST",
     url: "add_subject.php",
     data: $("#add-new-subject-form").serialize(),
     success: processAddSubjectResponse,        
@@ -268,6 +268,7 @@ $('#update-area > form > #eligibility-states').change(function() {
 
 $("#update-area > form > #btn-cancel").click(function() {
   setAppDisplayState("searchResults");
+  return false; // avoid executing the actual submit of the form.
 });
 
 $("#update-area > form > #btn-save").click(function() {

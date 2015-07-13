@@ -13,7 +13,7 @@ if($mysqli->connect_errno > 0){
 // Fist, we need to make sure that a subject with the given id does not exist.
 $query = $mysqli->query("
     SELECT COUNT(*) AS count FROM enrollment
-    WHERE subjId = " . $_GET['subjectId'] . ";");
+    WHERE subjId = " . $_POST['subjectId'] . ";");
 $count = mysqli_fetch_assoc($query)['count'];
 if($count > 0) {
     print create_response_string('error', 'subject already exists', NULL);
@@ -44,8 +44,8 @@ $query = $mysqli->query("
     , idx)
     VALUES(" . $statusAvailable . "
     , " . $poolProjectId . "
-    , " . $_GET['subjectId']. " 
-    , " . $_GET['homeId'] . " 
+    , " . $_POST['subjectId']. " 
+    , " . $_POST['homeId'] . " 
     , NOW()
     , " . $eligibilityStateAvailable . "
     , " . $eligibilitySubStateAvailable . "

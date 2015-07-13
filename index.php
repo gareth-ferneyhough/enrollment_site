@@ -95,7 +95,7 @@
         <select class="form-control" id="eligibility-sub-states" name="eligibility-sub-states">
         </select>
         <button type="submit" id="btn-save" class="btn btn-warning">Save</button>
-        <button type="submit" id="btn-cancel" class="btn btn-default">Cancel</button>
+        <button id="btn-cancel" class="btn btn-default">Cancel</button>
       </form>
     </div>
   </div>
