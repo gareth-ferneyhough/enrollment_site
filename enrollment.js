@@ -6,20 +6,24 @@ $("input[type='text']").on("click", function () {
  $(this).select();
 });
 
-function populateEligibilitySubStatesDropdown(enrollment_state_index, current_enrollment_sub_state) {
+function populateEligibilitySubStatesDropdown(eligibility_state_index, current_eligibility_sub_state) {
   // Empty and repopulate the eligibility sub state drop down.
   // This is called every time the user changed the option of the eligibility state.
   // Yes, this is inefficient. 
+  $('#update-area > form > #eligibility-sub-states').empty();
+  if(typeof(state.eligibilityStatesMap[eligibility_state_index]) == 'undefined'){
+    return;
+  }
   var temp_html = '';
-  $.each(state.eligibilityStatesMap[enrollment_state_index], function (i, item) {
+  $.each(state.eligibilityStatesMap[eligibility_state_index], function (i, item) {
     temp_html += '<option value=' + item.id;
-    if(current_enrollment_sub_state == item.id) { // mark as selected if need be
+    if(current_eligibility_sub_state == item.id) { // mark as selected if need be
       temp_html += ' selected';
     }
     temp_html += '>' + item.title + '</option>';
   }); 
-  $('#update-area > #eligibility-sub-states').empty();
-  $('#update-area > #eligibility-sub-states').append(temp_html);
+  
+  $('#update-area > form > #eligibility-sub-states').append(temp_html);
 }
 
 function registerUpdateButtonClick() {
@@ -40,6 +44,12 @@ function registerUpdateButtonClick() {
 
 function setAppDisplayState(state) {
   switch(state) {
+    case 'home':
+      $('#search-results-area').hide();
+      $('#add-new-subject-area').hide();
+      $('#update-area').hide();
+    break;
+
     case 'searchResults':
       $('#search-results-area').show();
       $('#add-new-subject-area').hide();
@@ -82,6 +92,9 @@ function processOverviewResponse(response) {
   json.eligibility + ' (' + json.secondary + ')</td><td>' + 
   dateString + '</td><td>' +
   getUpdateButtonHtml(json.projectId) + '</td></tr>';
+
+  // Populate our map from projectIds to their descriptions.
+  state.projectIdMap[json.projectId] = "Pool";
 
   $('#subj_id').html(json.subjectId);
   $('#home_id').html(json.homeId);
@@ -147,7 +160,7 @@ function processGetEnrollmentStatesResponse(response) {
   $("#update-area > #project-name").html(state.projectIdMap[state.currentProjectId]);
 
   // Clear all existing dropdowns
-  $("#update-area > select > option").remove();
+  $("#update-area > form > select > option").remove();
 
   var json = JSON.parse(response);
   // Create eligibility sub state map.
@@ -180,7 +193,7 @@ function processGetEnrollmentStatesResponse(response) {
     }
     temp_html += '>' + item.Name + '</option>';
   });  
-  $('#update-area > #enrollment-states').append(temp_html);
+  $('#update-area > form > #enrollment-states').append(temp_html);
 
   // Populate eligibility state dropdown
   temp_html = '';
@@ -192,12 +205,18 @@ function processGetEnrollmentStatesResponse(response) {
     }
     temp_html += '>' + item.Title + '</option>';
   });  
-  $('#update-area > #eligibility-states').append(temp_html);
+  $('#update-area > form > #eligibility-states').append(temp_html);
 
   setAppDisplayState('updateProject');
 }
 
-$("#search-subject-form").submit(function(e) {
+function processUpdateResponse(response) {
+  // Just performed update, so requery the server
+  // and re-show the subjects projects.
+  searchSubjectFormSubmit();
+}
+
+function searchSubjectFormSubmit(e) {
   // Make two ajax calls: one to retrieve the subject 
   // overview (homeId, pool enrollment, etc), and one
   // to retrieve the status for all projects.
@@ -219,6 +238,10 @@ $("#search-subject-form").submit(function(e) {
     });    
 
     return false; // avoid executing the actual submit of the form.
+}
+
+$("#search-subject-form").submit(function(e) {
+  return searchSubjectFormSubmit(e);
 });
 
 $("#add-new-subject-form").submit(function(e) { 
@@ -237,8 +260,26 @@ $("#new-subject-button").click(function() {
   setAppDisplayState("addNewSubject")
 });
 
-$('#update-area > #eligibility-states').change(function() {
-  $("#update-area > #eligibility-states option:selected").each(function() {
+$('#update-area > form > #eligibility-states').change(function() {
+  $("#update-area > form > #eligibility-states option:selected").each(function() {
       populateEligibilitySubStatesDropdown($(this).val(), null);
   });
+});
+
+$("#update-area > form > #btn-cancel").click(function() {
+  setAppDisplayState("searchResults");
+});
+
+$("#update-area > form > #btn-save").click(function() {
+    $.ajax({
+    type: "POST",
+    url: "update_project.php",
+    data: $("#update-form").serialize() +
+      "&subject_id=" + state.subjectId + 
+      "&project_id=" + state.currentProjectId,
+    success: processUpdateResponse,        
+    error: searchErrorFunction
+    });    
+
+    return false; // avoid executing the actual submit of the form.
 });

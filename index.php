@@ -2,7 +2,7 @@
 <body>
   <div class="container" id="top-level-container">
     <div id="header">
-      <h3><a href="/">ORCATECH Subject Enrollment - Home</a></h3>
+      <h3><a href="/">ORCATECH Subject Enrollment</a></h3>
     </div>
     <div id="search-area">
       <form class="form-inline" id="search-subject-form">
@@ -84,15 +84,19 @@
       <label>Subject id: </label><label id="subject-id"></label>
       <label>Project name: </label><label id="project-name"></label>
       <div></div>
-      <label>Enrollment state:</label>
-      <select class="form-control" id="enrollment-states" name="enrollment-states">
-      </select>
-      <label>Eligibility state:</label>
-      <select class="form-control" id="eligibility-states" name="eligibility-states">
-      </select>
-        <label>Eligibility sub state:</label>
-      <select class="form-control" id="eligibility-sub-states" name="eligibility-sub-states">
-      </select>
+      <form id="update-form">
+        <label>Enrollment state:</label>
+        <select class="form-control" id="enrollment-states" name="enrollment-states">
+        </select>
+        <label>Eligibility state:</label>
+        <select class="form-control" id="eligibility-states" name="eligibility-states">
+        </select>
+          <label>Eligibility sub state:</label>
+        <select class="form-control" id="eligibility-sub-states" name="eligibility-sub-states">
+        </select>
+        <button type="submit" id="btn-save" class="btn btn-warning">Save</button>
+        <button type="submit" id="btn-cancel" class="btn btn-default">Cancel</button>
+      </form>
     </div>
   </div>
   </div>
