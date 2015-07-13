@@ -18,7 +18,9 @@ $query = $mysqli->query("
         secondary AS eligibility_sub_state
         FROM enrollment 
         WHERE subjId = " . $_GET['subject_id'] . "
-        AND projId = " . $_GET['project_id'] . ";"
+        AND projId = " . $_GET['project_id'] . "
+        ORDER BY startDate DESC
+        LIMIT 1;"
     );
 if(!$query){
     print create_response_string('error', 'Database error occured', NULL);

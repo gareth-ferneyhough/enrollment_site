@@ -129,9 +129,16 @@ function processGetEnrollmentStatesResponse(response) {
   // Clear all existing dropdowns
   $("#update-area > select > option").remove();
 
+  // Parse the current states from the response, so we can ensure
+  // that they are currently selected in the dropdown.
+  var json = JSON.parse(response);
+  var current_states = JSON.parse(json.data.current_states)[0];
+  var enrollment_state = current_states.enrollment_state;
+  var eligibility_state = current_states.eligibility_state;
+  var eligibility_sub_state = current_states.eligibility_sub_state;
+
   // Populate enrollment state dropdown
   var temp_html = '';
-  var json = JSON.parse(response);
   $.each(JSON.parse(json.data.enrollment_states), function (i, item) {
     temp_html += '<option value=' + item.stateId + '>' + item.Name + '</option>';
   });  
