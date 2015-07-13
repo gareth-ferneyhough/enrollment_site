@@ -169,6 +169,7 @@ function processGetEnrollmentStatesResponse(response) {
   // Let's create a map of eligibility states which map to 
   // their corresponding sub state ids and names, then populate the 
   // sub state options in the handler for the eligibility state changed event. 
+  state.eligibilityStatesMap = {};
   $.each(JSON.parse(json.data.eligibility_sub_states), function (i, item) {
     if(typeof(state.eligibilityStatesMap[item.StateId]) == 'undefined'){
       state.eligibilityStatesMap[item.StateId] = [];
