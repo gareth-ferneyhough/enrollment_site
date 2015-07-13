@@ -87,6 +87,9 @@
       <label>Enrollment state:</label>
       <select class="form-control" id="enrollment-states" name="enrollment-states">
       </select>
+      <label>Eligibility state:</label>
+      <select class="form-control" id="eligibility-states" name="eligibility-states">
+      </select>
     </div>
   </div>
   </div>

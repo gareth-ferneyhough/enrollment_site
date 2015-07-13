@@ -14,6 +14,8 @@ function registerUpdateButtonClick() {
     $.ajax({
     type: "GET",
     url: "get_enrollment_states.php",
+    data: "subject_id=" + state.subjectId + 
+      "&project_id=" + state.currentProjectId,
     success: processGetEnrollmentStatesResponse,        
     error: searchErrorFunction
     });   
@@ -120,8 +122,6 @@ function processAddSubjectResponse(response) {
 }
 
 function processGetEnrollmentStatesResponse(response) {
-  //alert(response);
-
   // Populate subjectId and project name
   $("#update-area > #subject-id").html(state.subjectId);
   $("#update-area > #project-name").html(state.projectIdMap[state.currentProjectId]);
@@ -131,10 +131,18 @@ function processGetEnrollmentStatesResponse(response) {
 
   // Populate enrollment state dropdown
   var temp_html = '';
-  $.each(JSON.parse(response), function (i, item) {
-    temp_html += '<option value=' + item.stateId + '>' + item.Name + '</option>'
+  var json = JSON.parse(response);
+  $.each(JSON.parse(json.data.enrollment_states), function (i, item) {
+    temp_html += '<option value=' + item.stateId + '>' + item.Name + '</option>';
   });  
   $('#update-area > #enrollment-states').append(temp_html);
+
+  // Populate eligibility state dropdown
+  temp_html = '';
+  $.each(JSON.parse(json.data.eligibility_states), function (i, item) {
+    temp_html += '<option value=' + item.StateId + '>' + item.Title + '</option>';
+  });  
+  $('#update-area > #eligibility-states').append(temp_html);
 
   setAppDisplayState('updateProject');
 }
