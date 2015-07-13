@@ -81,10 +81,11 @@
     </div>
     <div id="update-area">
       <h4>Update project enrollment status and click submit when finished.</h4>
-      <div><label>Subject id: </label><label id="subj_id"></div>
-      <div><label>Project name: </label><label id="project_name"></div>
+      <label>Subject id: </label><label id="subject-id"></label>
+      <label>Project name: </label><label id="project-name"></label>
+      <div></div>
       <label>Enrollment state:</label>
-      <select class="form-control" name="enrollment-state">
+      <select class="form-control" id="enrollment-states" name="enrollment-states">
       </select>
     </div>
   </div>

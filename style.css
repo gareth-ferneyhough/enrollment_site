@@ -33,6 +33,9 @@
 #update-area{
 	display: none;
 }
-/*#update-area select{
+#update-area select{
 	max-width: 200px;
-}*/
+}
+#update-area #subject-id{
+	margin-right: 7px;
+}

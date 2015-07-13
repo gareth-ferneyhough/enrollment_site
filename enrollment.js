@@ -1,5 +1,5 @@
 // Global state object.
-var state = {subjectId: -1, currentProjectIdToUpdate: -1};
+var state = {subjectId: -1, currentProjectId: -1, projectIdMap: {}};
 
 // Select the text of an input field when we click on it.
 $("input[type='text']").on("click", function () {
@@ -8,7 +8,9 @@ $("input[type='text']").on("click", function () {
 
 function registerUpdateButtonClick() {
   $(".btn-update-project").on("click", function() {
-    state.currentProjectIdToUpdate = this.attributes["data-proj-id"].value;
+    // Save the state so we know what project the user selected
+    state.currentProjectId = this.attributes["data-proj-id"].value;
+
     $.ajax({
     type: "GET",
     url: "get_enrollment_states.php",
@@ -30,6 +32,7 @@ function setAppDisplayState(state) {
       $('#search-results-area').hide();
       $('#add-new-subject-area').show();
       $('#update-area').hide();
+    break;
 
     case 'updateProject':
       $('#search-results-area').hide();
@@ -77,6 +80,9 @@ function processOverviewResponse(response) {
 // into the project table for each row retrieved from the 
 // backend.
 function processProjectListResponse(response) {
+  // Clear our projectIds map.
+  state.projectIdsMap = {};
+
   // Clear all existing rows in the result table
   $("#project_table > tbody > tr").remove();
   var temp_html = '';
@@ -88,6 +94,9 @@ function processProjectListResponse(response) {
     item.eligibility + ' (' + item.secondary + ')</td><td>' + 
     dateString + '</td><td>' +
     getUpdateButtonHtml(item.projectId) + '</td></tr>';
+
+    // Populate our map from projectIds to their descriptions.
+    state.projectIdMap[item.projectId] = item.projectName;
   });  
   $('#project_table > tbody').append(temp_html);
 
@@ -113,13 +122,19 @@ function processAddSubjectResponse(response) {
 function processGetEnrollmentStatesResponse(response) {
   //alert(response);
 
+  // Populate subjectId and project name
+  $("#update-area > #subject-id").html(state.subjectId);
+  $("#update-area > #project-name").html(state.projectIdMap[state.currentProjectId]);
+
   // Clear all existing dropdowns
   $("#update-area > select > option").remove();
+
+  // Populate enrollment state dropdown
   var temp_html = '';
   $.each(JSON.parse(response), function (i, item) {
     temp_html += '<option value=' + item.stateId + '>' + item.Name + '</option>'
   });  
-  $('#update-area > select').append(temp_html);
+  $('#update-area > #enrollment-states').append(temp_html);
 
   setAppDisplayState('updateProject');
 }
